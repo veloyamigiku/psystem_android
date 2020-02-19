@@ -1,12 +1,8 @@
-package jp.co.myself.psystem_android.view;
+package jp.co.myself.psystem_android.view.fragment;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.InputFilter;
-import android.text.InputType;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -89,11 +85,11 @@ public class LoginFragment extends Fragment {
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
+    /*public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
-    }
+    }*/
 
     @Override
     public void onAttach(Context context) {
@@ -123,8 +119,8 @@ public class LoginFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        // 本フラグメントのサインアップボタンをタップした時のイベント処理。
+        void onTapSignupButton();
     }
 
     private View layoutUI() {
@@ -331,6 +327,14 @@ public class LoginFragment extends Fragment {
                 ConstraintSet.RIGHT,
                 ViewUtils.fromDipToPixel(18, getActivity()));
         signupBtnCs.applyTo(cl);
+        signupButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mListener != null) {
+                    mListener.onTapSignupButton();
+                }
+            }
+        });
 
 
         return cl;
