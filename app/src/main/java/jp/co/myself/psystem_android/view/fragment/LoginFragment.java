@@ -1,7 +1,6 @@
 package jp.co.myself.psystem_android.view.fragment;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;

@@ -1,13 +1,13 @@
 package jp.co.myself.psystem_android.view.activity;
 
+import android.net.Uri;
+import android.os.Bundle;
+import android.widget.FrameLayout;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
-import android.net.Uri;
-import android.os.Bundle;
-import android.widget.FrameLayout;
 
 import jp.co.myself.psystem_android.view.fragment.SignupFragment;
 
