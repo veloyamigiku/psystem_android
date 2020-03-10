@@ -9,12 +9,12 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import jp.co.myself.psystem_android.view.fragment.LoginFragment;
+import jp.co.myself.psystem_android.view.fragment.LoginMainFragment;
 import jp.co.myself.psystem_android.view.fragment.SignupFragment;
 
 public class MainActivity
         extends AppCompatActivity
-        implements LoginFragment.OnFragmentInteractionListener,
+        implements LoginMainFragment.OnFragmentInteractionListener,
             SignupFragment.OnFragmentInteractionListener {
 
     private static int FRAME_LAYOUT_RES_ID = 1;
@@ -39,7 +39,7 @@ public class MainActivity
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(
                 fl.getId(),
-                LoginFragment.newInstance("param1", "param2"));
+                LoginMainFragment.newInstance("param1", "param2"));
         fragmentTransaction.commit();
     }
 
@@ -64,4 +64,5 @@ public class MainActivity
     public void onFragmentInteraction(Uri uri) {
 
     }
+
 }

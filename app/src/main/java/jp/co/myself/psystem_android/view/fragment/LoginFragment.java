@@ -19,7 +19,7 @@ import jp.co.myself.psystem_android.utils.ViewUtils;
 import static android.util.TypedValue.COMPLEX_UNIT_SP;
 
 /**
- * ログイン画面のフラグメント。
+ * ログイン画面_認証情報の入力領域
  */
 public class LoginFragment extends Fragment {
 
@@ -31,7 +31,6 @@ public class LoginFragment extends Fragment {
     private static final int PASSWORD_EDIT_VIEW_RES_ID = 6;
     private static final int LOGIN_BUTTON_RES_ID = 7;
     private static final int SIGNUP_BUTTON_RES_ID = 8;
-
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -76,28 +75,23 @@ public class LoginFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(
+            LayoutInflater inflater,
+            ViewGroup container,
+            Bundle savedInstanceState) {
 
         return layoutUI();
 
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    /*public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }*/
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+        if (this.getParentFragment() instanceof OnFragmentInteractionListener) {
+            mListener = (OnFragmentInteractionListener) this.getParentFragment();
         } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+            throw new RuntimeException(
+                    this.getParentFragment().toString() + " must implement OnFragmentInteractionListener");
         }
     }
 
@@ -107,18 +101,9 @@ public class LoginFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
+    // 本フラグメントのリスナ定義。
     public interface OnFragmentInteractionListener {
-        // 本フラグメントのサインアップボタンをタップした時のイベント処理。
+        void onTapLoginButton();
         void onTapSignupButton();
     }
 
@@ -298,6 +283,12 @@ public class LoginFragment extends Fragment {
                 ConstraintSet.PARENT_ID,
                 ConstraintSet.LEFT,
                 ViewUtils.fromDipToPixel(18, getActivity()));
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.onTapLoginButton();
+            }
+        });
         loginBtnCs.applyTo(cl);
 
         // サインインボタンを配置する。
