@@ -23,7 +23,7 @@ import static android.util.TypedValue.COMPLEX_UNIT_SP;
  */
 public class LoginFragment extends Fragment {
 
-    private static final int CONSTRAINT_LAYOUT_RED_ID = 1;
+    private static final int CONSTRAINT_LAYOUT_RES_ID = 1;
     private static final int LOGIN_TEXT_VIEW_RES_ID = 2;
     private static final int USER_NAME_TEXT_VIEW_RES_ID = 3;
     private static final int USER_NAME_EDIT_VIEW_RES_ID = 4;
@@ -110,7 +110,7 @@ public class LoginFragment extends Fragment {
     private View layoutUI() {
 
         ConstraintLayout cl = new ConstraintLayout(getActivity());
-        cl.setId(CONSTRAINT_LAYOUT_RED_ID);
+        cl.setId(CONSTRAINT_LAYOUT_RES_ID);
 
         // ログインラベルを配置する。
         TextView loginTextView = new TextView(getActivity());
@@ -149,7 +149,7 @@ public class LoginFragment extends Fragment {
         // ユーザ名ラベルを配置する。
         TextView userNameTextView = new TextView(getActivity());
         userNameTextView.setId(USER_NAME_TEXT_VIEW_RES_ID);
-        userNameTextView.setText(R.string.user_name);
+        userNameTextView.setText(R.string.login_user);
         userNameTextView.setTextSize(COMPLEX_UNIT_SP, 18);
         cl.addView(userNameTextView);
         ConstraintSet userNameTvCs = new ConstraintSet();
@@ -205,7 +205,7 @@ public class LoginFragment extends Fragment {
         // パスワードラベルを配置する。
         TextView passwordTextView = new TextView(getActivity());
         passwordTextView.setId(PASSWORD_TEXT_VIEW_RES_ID);
-        passwordTextView.setText(R.string.password);
+        passwordTextView.setText(R.string.login_password);
         passwordTextView.setTextSize(COMPLEX_UNIT_SP, 18);
         cl.addView(passwordTextView);
         ConstraintSet passwordTvCs = new ConstraintSet();

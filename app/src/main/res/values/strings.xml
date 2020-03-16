@@ -5,8 +5,15 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="login">ログイン</string>
-    <string name="user_name">ユーザ名</string>
-    <string name="password">パスワード</string>
+    <string name="login_user">ユーザ名</string>
+    <string name="login_password">パスワード</string>
+
     <string name="signup">サインアップ</string>
+    <string name="signup_user">ユーザ名</string>
+    <string name="signup_password">パスワード</string>
+    <string name="signup_username">利用者名</string>
+    <string name="signup_next">次へ</string>
+    <string name="signup_cancel">キャンセル</string>
+    <string name="signup_back">戻る</string>
 
 </resources>

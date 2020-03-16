@@ -14,13 +14,13 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 /**
- * ログイン画面のメインフラグメント。
+ * サインアップ画面のメインフラグメント。
  */
-public class LoginMainFragment
-        extends Fragment
-        implements LoginFragment.OnFragmentInteractionListener {
+public class SignupMainFragment extends Fragment
+    implements SignupFragment.OnFragmentInteractionListener {
 
     private static final int FRAMELAYOUT_RES_ID = 1;
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -33,7 +33,7 @@ public class LoginMainFragment
 
     private OnFragmentInteractionListener mListener;
 
-    public LoginMainFragment() {
+    public SignupMainFragment() {
         // Required empty public constructor
     }
 
@@ -43,11 +43,11 @@ public class LoginMainFragment
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment LoginFragment.
+     * @return A new instance of fragment SignupMainFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static LoginMainFragment newInstance(String param1, String param2) {
-        LoginMainFragment fragment = new LoginMainFragment();
+    public static SignupMainFragment newInstance(String param1, String param2) {
+        SignupMainFragment fragment = new SignupMainFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -69,7 +69,6 @@ public class LoginMainFragment
                              Bundle savedInstanceState) {
 
         ConstraintLayout cl = new ConstraintLayout(getActivity());
-
         FrameLayout fl = new FrameLayout(getActivity());
         fl.setId(FRAMELAYOUT_RES_ID);
         cl.addView(
@@ -82,11 +81,10 @@ public class LoginMainFragment
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(
                 fl.getId(),
-                LoginFragment.newInstance("param1", "param2"));
+                SignupFragment.newInstance("param1", "param2"));
         ft.commit();
 
         return cl;
-
     }
 
     @Override
@@ -95,8 +93,8 @@ public class LoginMainFragment
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+            throw new RuntimeException(
+                    context.toString() + " must implement OnFragmentInteractionListener");
         }
     }
 
@@ -107,24 +105,23 @@ public class LoginMainFragment
     }
 
     @Override
-    public void onTapLoginButton() {
+    public void onTapInputNext() {
         Log.d(
-                "LoginMainFragment",
-                "LoginMainFragment onTapLoginButton");
+                SignupMainFragment.class.getSimpleName(),
+                "onTapInputNext");
     }
 
     @Override
-    public void onTapSignupButton() {
+    public void onTapInputCancel() {
         Log.d(
-                "LoginMainFragment",
-                "LoginMainFragment onTapSignupButton");
-        mListener.onTapSignupButton();
+                SignupMainFragment.class.getSimpleName(),
+                "onTapInputCancel");
+        mListener.onCancelSignup();
     }
 
     public interface OnFragmentInteractionListener {
-        // 本フラグメントのサインアップボタンをタップした時のイベント処理。
-        void onTapSignupButton();
-
+        // 本フラグメントのサインアップのイベント処理。
+        void onCancelSignup();
+        void onCompleteSignup();
     }
-
 }

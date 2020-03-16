@@ -1,6 +1,5 @@
 package jp.co.myself.psystem_android.view.activity;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.widget.FrameLayout;
 
@@ -10,14 +9,18 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import jp.co.myself.psystem_android.view.fragment.LoginMainFragment;
-import jp.co.myself.psystem_android.view.fragment.SignupFragment;
+import jp.co.myself.psystem_android.view.fragment.SignupMainFragment;
 
 public class MainActivity
         extends AppCompatActivity
         implements LoginMainFragment.OnFragmentInteractionListener,
-            SignupFragment.OnFragmentInteractionListener {
+            SignupMainFragment.OnFragmentInteractionListener {
 
     private static int FRAME_LAYOUT_RES_ID = 1;
+
+    private FragmentManager fragmentManager = null;
+    private FrameLayout frameLayout = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,20 +28,21 @@ public class MainActivity
 
         ConstraintLayout cl = new ConstraintLayout(this);
 
-        FrameLayout fl = new FrameLayout(this);
-        fl.setId(FRAME_LAYOUT_RES_ID);
+        frameLayout = new FrameLayout(this);
+        frameLayout.setId(FRAME_LAYOUT_RES_ID);
         cl.addView(
-                fl,
+                frameLayout,
                 new ConstraintLayout.LayoutParams(
                         ConstraintLayout.LayoutParams.MATCH_PARENT,
                         ConstraintLayout.LayoutParams.MATCH_PARENT));
 
         setContentView(cl);
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        // ログイン画面のメインフラグメントに切り替える。
+        fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(
-                fl.getId(),
+                frameLayout.getId(),
                 LoginMainFragment.newInstance("param1", "param2"));
         fragmentTransaction.commit();
     }
@@ -46,22 +50,29 @@ public class MainActivity
     @Override
     public void onTapSignupButton() {
 
-        // サインアップ画面に遷移する。
-        /*Intent intent = new Intent(this, SignupActivity.class);
-        startActivity(intent);*/
-        FrameLayout fl = findViewById(FRAME_LAYOUT_RES_ID);
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        // サインアップ画面のメインフラグメントに切り替える。
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(
-                fl.getId(),
-                SignupFragment.newInstance("param1", "param2"));
-        fragmentTransaction.addToBackStack(null);
+                frameLayout.getId(),
+                SignupMainFragment.newInstance("param1", "param2"));
         fragmentTransaction.commit();
 
     }
 
     @Override
-    public void onFragmentInteraction(Uri uri) {
+    public void onCancelSignup() {
+
+        // ログイン画面のメインフラグメントに切り替える。
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(
+                frameLayout.getId(),
+                LoginMainFragment.newInstance("param1", "param2"));
+        fragmentTransaction.commit();
+
+    }
+
+    @Override
+    public void onCompleteSignup() {
 
     }
 
