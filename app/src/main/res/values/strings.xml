@@ -16,4 +16,12 @@
     <string name="signup_cancel">キャンセル</string>
     <string name="signup_back">戻る</string>
 
+    <string name="signup_check_title">サインアップ確認</string>
+    <string name="signup_check_user">ユーザ名</string>
+    <string name="signup_check_password">パスワード</string>
+    <string name="signup_check_password_dummy">****</string>
+    <string name="signup_check_username">利用者名</string>
+    <string name="signup_check_register">登録</string>
+    <string name="singup_check_back">戻る</string>
+
 </resources>

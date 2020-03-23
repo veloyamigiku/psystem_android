@@ -17,7 +17,8 @@ import androidx.fragment.app.FragmentTransaction;
  * サインアップ画面のメインフラグメント。
  */
 public class SignupMainFragment extends Fragment
-    implements SignupFragment.OnFragmentInteractionListener {
+    implements SignupFragment.OnFragmentInteractionListener,
+    SignupCheckFragment.OnFragmentInterractionListener {
 
     private static final int FRAMELAYOUT_RES_ID = 1;
 
@@ -30,6 +31,9 @@ public class SignupMainFragment extends Fragment
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private FragmentManager fm = null;
+    private FrameLayout fl = null;
 
     private OnFragmentInteractionListener mListener;
 
@@ -69,7 +73,7 @@ public class SignupMainFragment extends Fragment
                              Bundle savedInstanceState) {
 
         ConstraintLayout cl = new ConstraintLayout(getActivity());
-        FrameLayout fl = new FrameLayout(getActivity());
+        fl = new FrameLayout(getActivity());
         fl.setId(FRAMELAYOUT_RES_ID);
         cl.addView(
                 fl,
@@ -77,7 +81,7 @@ public class SignupMainFragment extends Fragment
                         ConstraintLayout.LayoutParams.MATCH_PARENT,
                         ConstraintLayout.LayoutParams.MATCH_PARENT));
 
-        FragmentManager fm = getChildFragmentManager();
+        fm = getChildFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(
                 fl.getId(),
@@ -105,10 +109,16 @@ public class SignupMainFragment extends Fragment
     }
 
     @Override
-    public void onTapInputNext() {
-        Log.d(
-                SignupMainFragment.class.getSimpleName(),
-                "onTapInputNext");
+    public void onTapInputNext(String user, String password, String userName) {
+        // サインアップ画面_利用者登録情報の表示フラグメントに切り替える。
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(
+                fl.getId(),
+                SignupCheckFragment.newInstance(
+                        user,
+                        password,
+                        userName));
+        ft.commit();
     }
 
     @Override
@@ -117,6 +127,25 @@ public class SignupMainFragment extends Fragment
                 SignupMainFragment.class.getSimpleName(),
                 "onTapInputCancel");
         mListener.onCancelSignup();
+    }
+
+    @Override
+    public void onTapRegister() {
+        Log.d(
+                SignupMainFragment.class.getSimpleName(),
+                "onTapRegister");
+    }
+
+    @Override
+    public void onTapBack() {
+        // サインアップ画面（登録情報入力）のフラグメントに切り替える。
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(
+                fl.getId(),
+                SignupFragment.newInstance(
+                        "param1",
+                        "param2"));
+        ft.commit();
     }
 
     public interface OnFragmentInteractionListener {

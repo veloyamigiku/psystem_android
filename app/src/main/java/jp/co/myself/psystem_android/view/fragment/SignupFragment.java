@@ -101,7 +101,7 @@ public class SignupFragment extends Fragment {
 
     public interface OnFragmentInteractionListener {
         // サインアップ画面（登録情報入力）で、次へボタンをタップした時のイベント処理。
-        void onTapInputNext();
+        void onTapInputNext(String user, String password, String userName);
         // サインアップ画面（登録情報入力）で、キャンセルボタンをタップした時のイベント処理。
         void onTapInputCancel();
     }
@@ -341,7 +341,10 @@ public class SignupFragment extends Fragment {
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onTapInputNext();
+                mListener.onTapInputNext(
+                        userEditText.getText().toString(),
+                        passwordEditText.getText().toString(),
+                        userNameEditText.getText().toString());
             }
         });
 
