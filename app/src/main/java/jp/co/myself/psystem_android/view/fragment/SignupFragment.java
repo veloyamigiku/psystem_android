@@ -172,7 +172,7 @@ public class SignupFragment extends Fragment {
         userTvCs.applyTo(cl);
 
         // ユーザ名の入力項目を配置する。
-        EditText userEditText = new EditText(getActivity());
+        final EditText userEditText = new EditText(getActivity());
         userEditText.setId(USER_EDITVIEW_RES_ID);
         userEditText.setTextSize(COMPLEX_UNIT_SP, 18);
         cl.addView(userEditText);
@@ -228,7 +228,7 @@ public class SignupFragment extends Fragment {
         passwordTvCs.applyTo(cl);
 
         // パスワードの入力項目を配置する。
-        EditText passwordEditText = new EditText(getActivity());
+        final EditText passwordEditText = new EditText(getActivity());
         passwordEditText.setId(PASSWORD_EDITVIEW_RES_ID);
         passwordEditText.setTextSize(COMPLEX_UNIT_SP, 18);
         cl.addView(passwordEditText);
@@ -284,7 +284,7 @@ public class SignupFragment extends Fragment {
         userNameTvCs.applyTo(cl);
 
         // 利用者名の入力項目を配置する。
-        EditText userNameEditText = new EditText(getActivity());
+        final EditText userNameEditText = new EditText(getActivity());
         userNameEditText.setId(USERNAME_EDITVIEW_RES_ID);
         userNameEditText.setTextSize(COMPLEX_UNIT_SP, 18);
         cl.addView(userNameEditText);
