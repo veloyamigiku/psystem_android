@@ -16,10 +16,20 @@ public class OneBtnDialogFragment extends DialogFragment {
     private String message;
     private String btnString;
 
+    private Callback callback;
+
     public OneBtnDialogFragment(String title, String message, String btnString) {
         this.title = title;
         this.message = message;
         this.btnString = btnString;
+    }
+
+    public void setCallback(Callback callback) {
+        this.callback = callback;
+    }
+
+    public interface Callback {
+        void tapBtn();
     }
 
     @NonNull
@@ -37,12 +47,26 @@ public class OneBtnDialogFragment extends DialogFragment {
         dialogBuilder.setPositiveButton(this.btnString, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Log.d(
-                        OneBtnDialogFragment.class.getSimpleName(),
-                        "tapPositiveButton");
+                if (callback != null) {
+                    callback.tapBtn();
+                }
             }
         });
 
         return dialogBuilder.create();
     }
 }
+/* 利用例
+OneBtnDialogFragment dialog = new OneBtnDialogFragment(
+        "利用者登録結果",
+        "＝＝＝利用者登録結果のメッセージ＝＝＝",
+        "OK");
+dialog.setCallback(new OneBtnDialogFragment.Callback() {
+    @Override
+    public void tapBtn() {
+        Log.d(OneBtnDialogFragment.class.getSimpleName(),
+        "tapBtn");
+    }
+});
+dialog.show(getFragmentManager(), OneBtnDialogFragment.class.getSimpleName());
+*/
