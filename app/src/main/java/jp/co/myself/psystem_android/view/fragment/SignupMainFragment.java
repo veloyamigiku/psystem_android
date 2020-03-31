@@ -62,6 +62,7 @@ public class SignupMainFragment extends Fragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -82,6 +83,9 @@ public class SignupMainFragment extends Fragment
                         ConstraintLayout.LayoutParams.MATCH_PARENT));
 
         fm = getChildFragmentManager();
+        if (savedInstanceState != null) {
+            return cl;
+        }
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(
                 fl.getId(),

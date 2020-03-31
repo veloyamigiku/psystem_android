@@ -40,6 +40,9 @@ public class MainActivity
 
         // ログイン画面のメインフラグメントに切り替える。
         fragmentManager = getSupportFragmentManager();
+        if (savedInstanceState != null) {
+            return;
+        }
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(
                 frameLayout.getId(),

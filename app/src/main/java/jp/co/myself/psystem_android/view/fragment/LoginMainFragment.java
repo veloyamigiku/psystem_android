@@ -58,6 +58,7 @@ public class LoginMainFragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -79,6 +80,9 @@ public class LoginMainFragment
                         ConstraintLayout.LayoutParams.MATCH_PARENT));
 
         FragmentManager fm = getChildFragmentManager();
+        if (savedInstanceState != null) {
+            return cl;
+        }
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(
                 fl.getId(),

@@ -12,20 +12,33 @@ import androidx.fragment.app.DialogFragment;
 
 public class OneBtnDialogFragment extends DialogFragment {
 
-    private String title;
-    private String message;
-    private String btnString;
+    private static final String ARG_TITLE = "title";
+    private static final String ARG_MESSAGE = "message";
+    private static final String ARG_BTN_STR = "btn_str";
 
-    private Callback callback;
+    private String mTitle;
+    private String mMessage;
+    private String mBtnStr;
 
-    public OneBtnDialogFragment(String title, String message, String btnString) {
-        this.title = title;
-        this.message = message;
-        this.btnString = btnString;
+    private Callback mCallback;
+
+    public OneBtnDialogFragment() {}
+
+    public static OneBtnDialogFragment newInstance(
+            String title,
+            String message,
+            String btnStr) {
+        OneBtnDialogFragment fragment = new OneBtnDialogFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_TITLE, title);
+        args.putString(ARG_MESSAGE, message);
+        args.putString(ARG_BTN_STR, btnStr);
+        fragment.setArguments(args);
+        return fragment;
     }
 
     public void setCallback(Callback callback) {
-        this.callback = callback;
+        this.mCallback = callback;
     }
 
     public interface Callback {
@@ -36,19 +49,25 @@ public class OneBtnDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
 
+        if (getArguments() != null) {
+            mTitle = getArguments().getString(ARG_TITLE);
+            mMessage = getArguments().getString(ARG_MESSAGE);
+            mBtnStr = getArguments().getString(ARG_BTN_STR);
+        }
+
         // ダイアログビルダを作成する。
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
 
-        dialogBuilder.setTitle(this.title);
+        dialogBuilder.setTitle(this.mTitle);
 
         // ダイアログに表示するメッセージを設定する。
-        dialogBuilder.setMessage(this.message);
+        dialogBuilder.setMessage(this.mMessage);
 
-        dialogBuilder.setPositiveButton(this.btnString, new DialogInterface.OnClickListener() {
+        dialogBuilder.setPositiveButton(this.mBtnStr, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if (callback != null) {
-                    callback.tapBtn();
+                if (mCallback != null) {
+                    mCallback.tapBtn();
                 }
             }
         });
