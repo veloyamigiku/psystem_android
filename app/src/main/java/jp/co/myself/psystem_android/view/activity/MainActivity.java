@@ -64,19 +64,22 @@ public class MainActivity
 
     @Override
     public void onCancelSignup() {
-
         // ログイン画面のメインフラグメントに切り替える。
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(
                 frameLayout.getId(),
                 LoginMainFragment.newInstance("param1", "param2"));
         fragmentTransaction.commit();
-
     }
 
     @Override
     public void onCompleteSignup() {
-
+        // ログイン画面のメインフラグメントに切り替える。
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(
+                frameLayout.getId(),
+                LoginMainFragment.newInstance("param1", "param2"));
+        fragmentTransaction.commit();
     }
 
 }

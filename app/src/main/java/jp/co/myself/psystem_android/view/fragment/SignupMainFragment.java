@@ -138,6 +138,7 @@ public class SignupMainFragment extends Fragment
         Log.d(
                 SignupMainFragment.class.getSimpleName(),
                 "onTapRegister");
+        mListener.onCompleteSignup();
     }
 
     @Override
