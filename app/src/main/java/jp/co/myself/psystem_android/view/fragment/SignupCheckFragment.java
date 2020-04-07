@@ -115,7 +115,7 @@ public class SignupCheckFragment extends Fragment {
         signupCheckTvCs.applyTo(cl);
 
         // ユーザ名ラベルを配置する。
-        TextView userTextView = new TextView(getActivity());
+        final TextView userTextView = new TextView(getActivity());
         userTextView.setId(USER_TEXTVIEW_RES_ID);
         userTextView.setText(R.string.signup_check_user);
         userTextView.setTextSize(COMPLEX_UNIT_SP, 18);
@@ -142,7 +142,7 @@ public class SignupCheckFragment extends Fragment {
         userTvCs.applyTo(cl);
 
         // ユーザ名ラベル（値）を配置する。
-        TextView userValueTextView = new TextView(getActivity());
+        final TextView userValueTextView = new TextView(getActivity());
         userValueTextView.setId(USER_VALUE_TEXTVIEW_RES_ID);
         userValueTextView.setText(mUser);
         userValueTextView.setTextSize(COMPLEX_UNIT_SP, 18);
@@ -169,7 +169,7 @@ public class SignupCheckFragment extends Fragment {
         userValueTvCs.applyTo(cl);
 
         // パスワードラベルを配置する。
-        TextView passwordTextView = new TextView(getActivity());
+        final TextView passwordTextView = new TextView(getActivity());
         passwordTextView.setId(PASSWORD_TEXTVIEW_RES_ID);
         passwordTextView.setText(R.string.signup_check_password);
         passwordTextView.setTextSize(COMPLEX_UNIT_SP, 18);
@@ -196,7 +196,7 @@ public class SignupCheckFragment extends Fragment {
         passwordTvCs.applyTo(cl);
 
         // パスワードラベル（値）を配置する。
-        TextView passwordValueTextView = new TextView(getActivity());
+        final TextView passwordValueTextView = new TextView(getActivity());
         passwordValueTextView.setId(PASSWORD_VALUE_TEXTVIEW_RES_ID);
         passwordValueTextView.setText(R.string.signup_check_password_dummy);
         passwordValueTextView.setTextSize(COMPLEX_UNIT_SP, 18);
@@ -223,7 +223,7 @@ public class SignupCheckFragment extends Fragment {
         passwordValueTvCs.applyTo(cl);
 
         // 利用者名ラベルを配置する。
-        TextView userNameTextView = new TextView(getActivity());
+        final TextView userNameTextView = new TextView(getActivity());
         userNameTextView.setId(USER_NAME_TEXTVIEW_RES_ID);
         userNameTextView.setText(R.string.signup_check_username);
         userNameTextView.setTextSize(COMPLEX_UNIT_SP, 18);
@@ -250,7 +250,7 @@ public class SignupCheckFragment extends Fragment {
         userNameTvCs.applyTo(cl);
 
         // 利用者名ラベル（値）を配置する。
-        TextView userNameValueTextView = new TextView(getActivity());
+        final TextView userNameValueTextView = new TextView(getActivity());
         userNameValueTextView.setId(USER_NAME_VALUE_TEXTVIEW_RES_ID);
         userNameValueTextView.setText(mUserName);
         userNameValueTextView.setTextSize(COMPLEX_UNIT_SP, 18);
@@ -317,7 +317,10 @@ public class SignupCheckFragment extends Fragment {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onTapBack();
+                mListener.onTapBack(
+                        mUser,
+                        mPassword,
+                        mUserName);
             }
         });
         cl.addView(backButton);
@@ -366,6 +369,9 @@ public class SignupCheckFragment extends Fragment {
         // サインアップ画面（登録情報表示）で、登録ボタンをタップした時のイベント処理。
         void onTapRegister();
         // サインアップ画面（登録情報表示）で、戻るボタンをタップした時のイベント処理。
-        void onTapBack();
+        void onTapBack(
+                String user,
+                String password,
+                String userName);
     }
 }

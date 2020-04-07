@@ -89,7 +89,10 @@ public class SignupMainFragment extends Fragment
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(
                 fl.getId(),
-                SignupFragment.newInstance("param1", "param2"));
+                SignupFragment.newInstance(
+                        "",
+                        "",
+                        ""));
         ft.commit();
 
         return cl;
@@ -142,14 +145,19 @@ public class SignupMainFragment extends Fragment
     }
 
     @Override
-    public void onTapBack() {
+    public void onTapBack(
+            String user,
+            String password,
+            String userName
+    ) {
         // サインアップ画面（登録情報入力）のフラグメントに切り替える。
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(
                 fl.getId(),
                 SignupFragment.newInstance(
-                        "param1",
-                        "param2"));
+                        user,
+                        password,
+                        userName));
         ft.commit();
     }
 

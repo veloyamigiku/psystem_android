@@ -34,14 +34,13 @@ public class SignupFragment extends Fragment {
     private static final int NEXT_BUTTON_RES_ID = 9;
     private static final int CANCEL_BUTTON_RES_ID = 10;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String ARG_USER = "user";
+    private static final String ARG_PASSWORD = "password";
+    private static final String ARG_USERNAME = "username";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private String mUser;
+    private String mPassword;
+    private String mUserName;
 
     private OnFragmentInteractionListener mListener;
 
@@ -49,20 +48,15 @@ public class SignupFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment SignupFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static SignupFragment newInstance(String param1, String param2) {
+    public static SignupFragment newInstance(
+            String user,
+            String password,
+            String userName) {
         SignupFragment fragment = new SignupFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString(ARG_USER, user);
+        args.putString(ARG_PASSWORD, password);
+        args.putString(ARG_USERNAME, userName);
         fragment.setArguments(args);
         return fragment;
     }
@@ -71,8 +65,9 @@ public class SignupFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            mUser = getArguments().getString(ARG_USER, "");
+            mPassword = getArguments().getString(ARG_PASSWORD, "");
+            mUserName = getArguments().getString(ARG_USERNAME, "");
         }
     }
 
@@ -174,6 +169,7 @@ public class SignupFragment extends Fragment {
         // ユーザ名の入力項目を配置する。
         final EditText userEditText = new EditText(getActivity());
         userEditText.setId(USER_EDITVIEW_RES_ID);
+        userEditText.setText(mUser);
         userEditText.setTextSize(COMPLEX_UNIT_SP, 18);
         cl.addView(userEditText);
         ConstraintSet userEtCs = new ConstraintSet();
@@ -230,6 +226,7 @@ public class SignupFragment extends Fragment {
         // パスワードの入力項目を配置する。
         final EditText passwordEditText = new EditText(getActivity());
         passwordEditText.setId(PASSWORD_EDITVIEW_RES_ID);
+        passwordEditText.setText(mPassword);
         passwordEditText.setTextSize(COMPLEX_UNIT_SP, 18);
         cl.addView(passwordEditText);
         ConstraintSet passwordEtCs = new ConstraintSet();
@@ -286,6 +283,7 @@ public class SignupFragment extends Fragment {
         // 利用者名の入力項目を配置する。
         final EditText userNameEditText = new EditText(getActivity());
         userNameEditText.setId(USERNAME_EDITVIEW_RES_ID);
+        userNameEditText.setText(mUserName);
         userNameEditText.setTextSize(COMPLEX_UNIT_SP, 18);
         cl.addView(userNameEditText);
         ConstraintSet userNameEtCs = new ConstraintSet();
