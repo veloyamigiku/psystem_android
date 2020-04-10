@@ -2,19 +2,26 @@ package jp.co.myself.psystem_android.view.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
-
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
-import androidx.fragment.app.Fragment;
-
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
+import androidx.fragment.app.Fragment;
+
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import jp.co.myself.psystem_android.R;
 import jp.co.myself.psystem_android.utils.ViewUtils;
+import jp.co.myself.psystem_android.utils.retrofit.api.PSystemWebService;
+import jp.co.myself.psystem_android.utils.retrofit.api.RetrofitFactory;
+import jp.co.myself.psystem_android.utils.retrofit.entity.ResultIssueJWTForSignup;
+import retrofit2.Retrofit;
 
 import static android.util.TypedValue.COMPLEX_UNIT_SP;
 
@@ -68,6 +75,25 @@ public class SignupCheckFragment extends Fragment {
             mPassword = getArguments().getString(ARG_PASSWORD);
             mUserName = getArguments().getString(ARG_USERNAME);
         }
+        Retrofit retrofit = RetrofitFactory.getInstance(
+                "https://localhost/psystem/",
+                false);
+        PSystemWebService service = retrofit.create(PSystemWebService.class);
+        Observable<ResultIssueJWTForSignup> response = service.issueJwtForSignup("param");
+        response.subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        (res) -> {
+                            Log.d(
+                                    SignupCheckFragment.class.getSimpleName(),
+                                    res.token);
+                        },
+                        (e) -> {
+                            Log.d(
+                                    SignupCheckFragment.class.getSimpleName(),
+                                    e.getMessage());
+                        }
+                );
     }
 
     @Override
