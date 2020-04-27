@@ -2,7 +2,6 @@ package jp.co.myself.psystem_android.view.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,15 +12,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.fragment.app.Fragment;
 
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 import jp.co.myself.psystem_android.R;
 import jp.co.myself.psystem_android.utils.ViewUtils;
-import jp.co.myself.psystem_android.utils.retrofit.api.PSystemWebService;
-import jp.co.myself.psystem_android.utils.retrofit.api.RetrofitFactory;
-import jp.co.myself.psystem_android.utils.retrofit.entity.ResultIssueJWTForSignup;
-import retrofit2.Retrofit;
 
 import static android.util.TypedValue.COMPLEX_UNIT_SP;
 
@@ -34,7 +26,7 @@ public class SignupCheckFragment extends Fragment {
     private static final int SIGNUP_CHECK_TEXTVIEW_RES_ID = 2;
     private static final int USER_TEXTVIEW_RES_ID = 3;
 
-
+    private static final String ARG_TOKEN = "token";
     private static final String ARG_USER = "user";
     private static final String ARG_PASSWORD = "password";
     private static final String ARG_USERNAME = "username";
@@ -47,6 +39,7 @@ public class SignupCheckFragment extends Fragment {
     private static final int REGISTER_BUTTON_RES_ID = 9;
     private static final int BACK_BUTTON_RES_ID = 10;
 
+    private String mToken;
     private String mUser;
     private String mPassword;
     private String mUserName;
@@ -57,9 +50,10 @@ public class SignupCheckFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static SignupCheckFragment newInstance(String user, String password, String userName) {
+    public static SignupCheckFragment newInstance(String token, String user, String password, String userName) {
         SignupCheckFragment fragment = new SignupCheckFragment();
         Bundle args = new Bundle();
+        args.putString(ARG_TOKEN, token);
         args.putString(ARG_USER, user);
         args.putString(ARG_PASSWORD, password);
         args.putString(ARG_USERNAME, userName);
@@ -71,29 +65,11 @@ public class SignupCheckFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
+            mToken = getArguments().getString(ARG_TOKEN);
             mUser = getArguments().getString(ARG_USER);
             mPassword = getArguments().getString(ARG_PASSWORD);
             mUserName = getArguments().getString(ARG_USERNAME);
         }
-        Retrofit retrofit = RetrofitFactory.getInstance(
-                "https://localhost/psystem/",
-                false);
-        PSystemWebService service = retrofit.create(PSystemWebService.class);
-        Observable<ResultIssueJWTForSignup> response = service.issueJwtForSignup("param");
-        response.subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        (res) -> {
-                            Log.d(
-                                    SignupCheckFragment.class.getSimpleName(),
-                                    res.token);
-                        },
-                        (e) -> {
-                            Log.d(
-                                    SignupCheckFragment.class.getSimpleName(),
-                                    e.getMessage());
-                        }
-                );
     }
 
     @Override

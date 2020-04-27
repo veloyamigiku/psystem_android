@@ -116,12 +116,13 @@ public class SignupMainFragment extends Fragment
     }
 
     @Override
-    public void onTapInputNext(String user, String password, String userName) {
+    public void onTapInputNext(String token, String user, String password, String userName) {
         // サインアップ画面_利用者登録情報の表示フラグメントに切り替える。
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(
                 fl.getId(),
                 SignupCheckFragment.newInstance(
+                        token,
                         user,
                         password,
                         userName));

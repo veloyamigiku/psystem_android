@@ -7,7 +7,7 @@ import retrofit2.http.Query;
 
 public interface PSystemWebService {
 
-    @GET("issue_jwt_for_signup")
+    @GET("user/issue_jwt_for_signup")
     Observable<ResultIssueJWTForSignup> issueJwtForSignup(@Query("sample") String sample);
 
 }

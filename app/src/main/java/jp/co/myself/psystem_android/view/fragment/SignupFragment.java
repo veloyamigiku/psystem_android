@@ -13,8 +13,15 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.fragment.app.Fragment;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import jp.co.myself.psystem_android.R;
 import jp.co.myself.psystem_android.utils.ViewUtils;
+import jp.co.myself.psystem_android.utils.retrofit.Const;
+import jp.co.myself.psystem_android.utils.retrofit.api.PSystemWebService;
+import jp.co.myself.psystem_android.utils.retrofit.api.RetrofitFactory;
+import jp.co.myself.psystem_android.view.fragment.dialog.OneBtnDialogFragment;
+import retrofit2.Retrofit;
 
 import static android.util.TypedValue.COMPLEX_UNIT_SP;
 
@@ -69,6 +76,7 @@ public class SignupFragment extends Fragment {
             mPassword = getArguments().getString(ARG_PASSWORD, "");
             mUserName = getArguments().getString(ARG_USERNAME, "");
         }
+        setRetainInstance(true);
     }
 
     @Override
@@ -96,7 +104,7 @@ public class SignupFragment extends Fragment {
 
     public interface OnFragmentInteractionListener {
         // サインアップ画面（登録情報入力）で、次へボタンをタップした時のイベント処理。
-        void onTapInputNext(String user, String password, String userName);
+        void onTapInputNext(String token, String user, String password, String userName);
         // サインアップ画面（登録情報入力）で、キャンセルボタンをタップした時のイベント処理。
         void onTapInputCancel();
     }
@@ -339,10 +347,62 @@ public class SignupFragment extends Fragment {
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onTapInputNext(
-                        userEditText.getText().toString(),
-                        passwordEditText.getText().toString(),
-                        userNameEditText.getText().toString());
+
+                Retrofit retrofit = RetrofitFactory.getInstance(
+                        Const.BASE_URL,
+                        false);
+                PSystemWebService service = retrofit.create(PSystemWebService.class);
+                service.issueJwtForSignup("param")
+                        .subscribeOn(Schedulers.newThread())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                (res) -> {
+                                    if (mListener == null) {
+                                        return;
+                                    }
+                                    if (res.result) {
+                                        mListener.onTapInputNext(
+                                                res.token,
+                                                userEditText.getText().toString(),
+                                                passwordEditText.getText().toString(),
+                                                userNameEditText.getText().toString());
+                                    } else {
+                                        // トークン発行に失敗(status=200)のダイアログ。画面遷移なし。
+                                        OneBtnDialogFragment dialog = OneBtnDialogFragment.newInstance(
+                                                "利用者登録",
+                                                "利用者登録用のトークン発行に失敗しました。",
+                                                "閉じる");
+                                        dialog.setCallback(new OneBtnDialogFragment.Callback() {
+                                            @Override
+                                            public void tapBtn() {
+                                                // 処理なし。
+                                            }
+                                        });
+                                        dialog.show(
+                                                getFragmentManager(),
+                                                OneBtnDialogFragment.class.getSimpleName());
+                                    }
+                                },
+                                (err) -> {
+                                    if (mListener == null) {
+                                        return;
+                                    }
+                                    // トークン発行に失敗のダイアログ。(status=200以外)。画面遷移なし。
+                                    OneBtnDialogFragment dialog = OneBtnDialogFragment.newInstance(
+                                            "利用者登録",
+                                            "利用者登録処理中の通信が失敗しました。",
+                                            "閉じる");
+                                    dialog.setCallback(new OneBtnDialogFragment.Callback() {
+                                        @Override
+                                        public void tapBtn() {
+                                            // 処理なし。
+                                        }
+                                    });
+                                    dialog.show(
+                                            getFragmentManager(),
+                                            OneBtnDialogFragment.class.getSimpleName());
+                                });
+
             }
         });
 
